@@ -1,3 +1,4 @@
+// (beats 100%)
 func searchMatrix(matrix [][]int, target int) bool {
     l := 0
     r := len(matrix) - 1

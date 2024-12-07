@@ -1,3 +1,4 @@
+# (beats 100%)
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
         l = 0
@@ -25,4 +26,3 @@ class Solution:
             else:
                 rr = m - 1
         return False
-        
