@@ -1,3 +1,4 @@
+// (beats 100%)
 func search(nums []int, target int) int {
     l := 0
     r := len(nums) - 1

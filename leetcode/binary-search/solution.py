@@ -1,3 +1,4 @@
+# (beats 100%)
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         l = 0
@@ -12,4 +13,3 @@ class Solution:
             else:
                 r = m - 1
         return -1
-        
