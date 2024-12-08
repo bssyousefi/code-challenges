@@ -52,3 +52,48 @@ func (this *TimeMap) Get(key string, timestamp int) string {
  * obj.Set(key,value,timestamp);
  * param_2 := obj.Get(key,timestamp);
  */
+
+// Second solution (beats 99%)
+type TimeMap struct {
+    key map[string]*Key
+}
+
+type Key struct {
+    data []string
+    time []int
+}
+
+
+func Constructor() TimeMap {
+    return TimeMap{make(map[string]*Key)}
+}
+
+func (this *TimeMap) Set(key string, value string, timestamp int)  {
+    if v, ok := this.key[key]; ok {
+        v.data = append(v.data, value)
+        v.time = append(v.time, timestamp)
+    } else {
+        this.key[key] = &Key{[]string{value}, []int{timestamp}}
+    }
+}
+
+func (this *TimeMap) Get(key string, timestamp int) string {
+    if v, ok := this.key[key]; ok {
+        i, j := 0, len(v.data) - 1
+        for i <= j {
+            m := (i + j) / 2
+            if v.time[m] > timestamp {
+                j = m - 1
+            } else {
+                i = m + 1
+            }
+        }
+        if j >= 0 {
+            return v.data[j]
+        } else {
+            return ""
+        }
+    } else {
+        return ""
+    }
+}
