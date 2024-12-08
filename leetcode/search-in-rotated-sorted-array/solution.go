@@ -23,3 +23,34 @@ func search(nums []int, target int) int {
     }
     return -1
 }
+// New solution (beats 100%)
+func search(nums []int, target int) int {
+    i, j := 0, len(nums) - 1
+    for i < j {
+        m := (i + j) / 2
+        if nums[m] == target {
+            return m
+        } else if nums[m] > target {
+            if nums[m] < nums[j] {
+                j = m - 1
+            } else if nums[i] <= target {
+                j = m - 1
+            } else {
+                i = m + 1
+            }
+        } else {
+            if nums[m] > nums[j] {
+                i = m + 1
+            } else if nums[j] >= target {
+                i = m + 1
+            } else {
+                j = m - 1
+            }
+        }
+    }
+    if nums[i] == target {
+        return i
+    } else {
+        return -1
+    }
+}
