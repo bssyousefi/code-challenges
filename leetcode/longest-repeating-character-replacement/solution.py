@@ -1,3 +1,4 @@
+# Previous solution (beats 61%)
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
         cache = {}
