@@ -24,3 +24,32 @@ func checkInclusion(s1 string, s2 string) bool {
     }
     return false
 }
+// New solution (beats 100%)
+func checkInclusion(s1 string, s2 string) bool {
+    _map := [26]int{0}
+    for i:=0; i<len(s1); i++ {
+        _map[s1[i] - 'a']++
+    }
+    i, j := 0, 0
+    for j < len(s2){
+        if _map[s2[j] - 'a'] > 0 {
+            _map[s2[j] - 'a']--
+            if j - i + 1 == len(s1) {
+                return true
+            }
+            j++
+        } else {
+            for _map[s2[j] - 'a'] == 0 && i < j {
+                _map[s2[i] - 'a']++
+                i++
+            }
+        }
+        if i == j {
+            for j < len(s2) && _map[s2[j] - 'a'] == 0 {
+                j++
+            }
+            i = j
+        }
+    }
+    return false
+}
