@@ -6,7 +6,7 @@ class Solution:
         res = ''
         for i in t:
             m[i] = m.get(i,0) + 1
-        
+
         l = 0
         n = {}
         r = l
@@ -26,4 +26,32 @@ class Solution:
                 l += 1
             r += 1
         return res
+# Second soluton (beats 70%)
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        _min = (1e6,-1,-1)
+        _map = defaultdict(int)
+        cache = defaultdict(int)
+        count = 0
+        n = len(t)
+        for i in t:
+            _map[i] += 1
 
+        i,j = 0, 0
+        while j < len(s):
+            if count != n:
+                if _map[s[j]] > 0:
+                    cache[s[j]] += 1
+                    if cache[s[j]] <= _map[s[j]]:
+                        count += 1
+                while count == n:
+                    if j - i < _min[0]:
+                        _min = (j-i+1, i, j)
+                    if _map[s[i]] > 0:
+                        if cache[s[i]] <= _map[s[i]]:
+                            count -= 1
+                        cache[s[i]] -= 1
+                    i += 1
+                j += 1
+
+        return s[_min[1]:_min[2]+1]

@@ -39,3 +39,40 @@ func minWindow(s string, t string) string {
 		return s[res : res+k]
 	}
 }
+
+// Second solution (beats 40%)
+func minWindow(s string, t string) string {
+    res := ""
+    _map := make(map[byte]int)
+    cache := make(map[byte]int)
+    count := 0
+    n := len(t)
+    for i:=0;i<n;i++ {
+        _map[t[i]]++
+    }
+    i,j := 0,0
+    for j < len(s) {
+        if count != n {
+            if _map[s[j]] > 0 {
+                cache[s[j]]++
+                if cache[s[j]] <= _map[s[j]] {
+                    count++
+                }
+                for count == n {
+                    if res == "" || len(res) > (j-i+1) {
+                        res = s[i:j+1]
+                    }
+                    if _map[s[i]] > 0 {
+                        if cache[s[i]] <= _map[s[i]]{
+                            count--
+                        }
+                        cache[s[i]]--
+                    }
+                    i++
+                }
+            }
+        }
+        j++
+    }
+    return res
+}
