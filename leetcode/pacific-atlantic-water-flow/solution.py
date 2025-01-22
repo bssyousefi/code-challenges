@@ -40,7 +40,7 @@ class Solution:
                 if cal(i,j,-1) == 3:
                     ret.append([i,j])
         return ret
-# Second solution (beats 91%) (flow upward from boundaries)
+# Second solution (beats 91%) (DFS, flow upward from boundaries)
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
         rows = len(heights)
