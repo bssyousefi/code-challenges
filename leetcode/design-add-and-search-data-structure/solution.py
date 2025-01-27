@@ -35,7 +35,39 @@ class WordDictionary:
                 if ret:
                     return True
             return False
+# Second solution (beats 91%) (same solution)
+class WordDictionary:
 
+    def __init__(self):
+        self.data = {}
+
+    def addWord(self, word):
+        self.add(word, self.data)
+
+    def add(self, word, data):
+        if len(word) == 0:
+            data["#"] = True
+            return
+
+        if word[0] not in data:
+            data[word[0]] = {}
+        self.add(word[1:], data[word[0]])
+
+    def search(self, word):
+        return self.get(word, self.data)
+
+    def get(self, word, data):
+        if len(word) == 0:
+            return True if "#" in data else False
+        if word[0] == ".":
+            for child in data:
+                if child != "#" and self.get(word[1:],data[child]):
+                    return True
+            return False
+        else:
+            if word[0] not in data:
+                return False
+            return self.get(word[1:], data[word[0]])
 
 # Your WordDictionary object will be instantiated and called as such:
 # obj = WordDictionary()
