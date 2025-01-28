@@ -98,3 +98,19 @@ class Solution:
             cur = tmp
 
         return head.next if head else head
+# Third solution (beats 97%)
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        d = {}
+        def dfs(node):
+            if node is None:
+                return None
+            if node in d:
+                return d[node]
+            n = Node(node.val)
+            d[node] = n
+            n.next = dfs(node.next)
+            n.random = dfs(node.random)
+            return n
+
+        return dfs(head)
