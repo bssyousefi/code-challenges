@@ -22,3 +22,15 @@ class Solution:
             i += 1
         return s
 
+# Second solution (beats 100%)
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        result = strs[0]
+        for i in range(1, len(strs)):
+            while result:
+                if strs[i].startswith(result):
+                    break
+                else:
+                    result = result[:-1]
+        return result
+
