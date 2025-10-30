@@ -24,3 +24,27 @@ class Solution:
                 q.append((node.right, l+1))
                 tmp.append(node.val)
         return res
+
+# Second solution (beats 100%)
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if root is None:
+            return []
+        queue = [root]
+        ret = []
+        i = 0
+
+        while queue:
+            group = []
+            for _ in range(len(queue)):
+                node = queue.pop(0)
+                if node:
+                    group.append(node.val)
+                    if node.left:
+                        queue.append(node.left)
+                    if node.right:
+                        queue.append(node.right)
+            ret.append(group)
+
+        return ret
+
