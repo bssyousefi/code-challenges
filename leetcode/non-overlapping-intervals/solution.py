@@ -37,3 +37,17 @@ class Solution:
                 start = intervals[i][0]
 
         return ret
+
+# Third solution (beats 78%) (Same greedy, from left to right)
+class Solution:
+    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
+        ints = sorted(intervals, key=lambda x: x[1])
+        j = float("-inf")
+        result = 0
+        for i in range(len(ints)):
+            if ints[i][0] < j:
+                result += 1
+            else:
+                j = ints[i][1]
+        return result
+
