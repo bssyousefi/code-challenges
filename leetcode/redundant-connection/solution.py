@@ -25,10 +25,7 @@ class Solution:
                         else:
                             return v
             return -1
-        for i in d:
-            if not visit[i-1]:
-                if dfs(i) == 0:
-                    break
+        dfs(edges[0][0])
 
         for i in range(len(edges)-1,-1,-1):
             if edges[i][0] in loop and edges[i][1] in loop:
