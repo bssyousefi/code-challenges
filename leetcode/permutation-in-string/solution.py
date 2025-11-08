@@ -57,3 +57,28 @@ class Solution:
                     j += 1
                 i = j
         return False
+
+# Third solution (beats 57%)
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        l1 = len(s1)
+        map_ = Counter(s1)
+        map_2 = defaultdict(int)
+
+        l, r = -1, 0
+        while r < len(s2):
+            if r - l < l1:
+                if s2[r] in map_:
+                    map_2[s2[r]] += 1
+                r += 1
+                continue
+            if l >= 0 and s2[l] in map_:
+                map_2[s2[l]] -= 1
+            l += 1
+            if s2[r] in map_:
+                map_2[s2[r]] += 1
+            r += 1
+            if map_ == map_2:
+                return True
+
+        return False
