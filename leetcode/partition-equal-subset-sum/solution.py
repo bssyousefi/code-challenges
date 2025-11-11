@@ -93,3 +93,18 @@ class Solution:
             dp.update(new_set)
             dp.add(nums[i])
         return s in dp
+# Sixth solution (beats 98%)
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        s = sum(nums)
+        if s % 2 == 1:
+            return False
+        nums.sort()
+        ret = {0}
+        def _build(new):
+            ret.update({new+i for i in ret})
+        for n in nums:
+            _build(n)
+            if (s//2) in ret:
+                return True
+        return False
