@@ -54,3 +54,40 @@ class Solution:
             times += 1
 
         return -1 if fresh > 0 else times
+
+# Third solution (beats 86%) (BFS)
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+        visit = [[False] * n for _ in range(m)]
+        fresh_count = 0
+        directions = [(1,0), (-1, 0), (0, 1), (0, -1)]
+        queue = []
+        ret = 0
+
+        for i in range(m):
+            for j in range(n):
+                match grid[i][j]:
+                    case 0:
+                        visit[i][j] = True
+                    case 2:
+                        visit[i][j] = True
+                        queue.append((i,j,0))
+                    case 1:
+                        fresh_count += 1
+
+        while queue:
+            i, j, ret = queue.pop(0)
+            for di, dj in directions:
+                ii = di + i
+                jj = dj + j
+                if ii >= 0 and ii < m and jj >= 0 and jj < n and not visit[ii][jj]:
+                    visit[ii][jj] = True
+                    fresh_count -= 1
+                    queue.append((ii, jj, ret + 1))
+
+        if fresh_count == 0:
+            return ret
+        else:
+            return -1
