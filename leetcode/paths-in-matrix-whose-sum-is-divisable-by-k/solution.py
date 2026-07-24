@@ -38,3 +38,33 @@ class Solution:
                             rec[i][j][(l+v)%k] += vv
 
         return rec[-1][-1][0]%(10**9+7)
+
+
+#Third Solution (beats 14%) (DP + BFS)
+# Basically same as the second solution from different angle using BFS
+class Solution:
+    def numberOfPaths(self, grid: List[List[int]], k: int) -> int:
+        l = defaultdict(lambda: defaultdict(int))
+        rmax, cmax = len(grid), len(grid[0])
+        BIG_MODULO = int(1e9 + 7)
+        seen = set()
+        q = deque()
+        q.append((0,0))
+        l[(0,0)][0] = 1
+        while q:
+            i, j = q.popleft()
+            if (i,j) in seen:
+                continue
+            seen.add((i,j))
+            if i >= rmax or j >= cmax:
+                continue
+            s = grid[i][j]
+            for n, m in l[(i,j)].items():
+                v = (s + n) % k
+                l[(i, j+1)][v] += m
+                l[(i, j+1)][v] %= BIG_MODULO
+                l[(i+1, j)][v] += m
+                l[(i+1, j)][v] %= BIG_MODULO
+            q.extend([(i, j+1), (i+1, j)])
+
+        return l[(rmax,cmax-1)][0]
