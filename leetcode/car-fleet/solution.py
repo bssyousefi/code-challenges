@@ -27,3 +27,18 @@ class Solution:
                 count += 1
                 _min = n[i][0]
         return count
+
+
+# Third solution (beats 15%)
+class Solution:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        n = len(position)
+        car = [[position[i], (target-position[i])/speed[i]] for i in range(n)]
+        car.sort(reverse=True)
+        count = 1
+        for i in range(1, n):
+            if car[i][1] <= car[i-1][1]:
+                car[i][1] = car[i-1][1]
+            else:
+                count += 1
+        return count

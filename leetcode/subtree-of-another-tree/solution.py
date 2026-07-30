@@ -33,3 +33,31 @@ class Solution:
             return True
         else:
             return False
+
+# Second solution (beats 89%)
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        def dfs(node):
+            if node is None:
+                return False
+            if isSame(node, subRoot):
+                return True
+            return dfs(node.right) or dfs(node.left)
+
+        def isSame(node_a, node_b):
+            if node_a is None and node_b is None:
+                return True
+            elif node_a is None or node_b is None:
+                return False
+            elif node_a.val != node_b.val:
+                return False
+            else:
+                return isSame(node_a.left, node_b.left) and isSame(node_a.right, node_b.right)
+
+        return dfs(root)

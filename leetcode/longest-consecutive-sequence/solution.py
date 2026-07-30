@@ -35,3 +35,24 @@ class Solution:
                 # if _max > len(_set)//2:
                 #     return _max
         return _max
+
+# Third solution (beats 36%)
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        num_set = set(nums)
+        max_len = 0
+        seen = {}
+        for num in num_set:
+            if num in seen:
+                continue
+            start, end = num, num
+            while end+1 in num_set:
+                end += 1
+                seen[end] = 1
+            while start-1 in num_set:
+                start -= 1
+                seen[start] = 1
+            if max_len < (end-start+1):
+                max_len = end-start + 1
+        return max_len
+

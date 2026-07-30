@@ -32,3 +32,14 @@ class Solution:
 
     def parse(self, word: str):
         return "".join(sorted(word))
+
+# Third solution (beats 98%)
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        len_list = len(strs)
+        sorted_list = ["".join(sorted(word)) for word in strs]
+        counter = defaultdict(list)
+        for i in range(len_list):
+            counter[sorted_list[i]].append(i)
+
+        return [[strs[k] for k in v] for _, v in counter.items()]

@@ -92,3 +92,34 @@ class Solution:
             i += 1
 
         return [list(i) for i in ret]
+
+# Fifth solution (beats 24%)
+class Solution:
+    def threeSum(self, nums: list[int]) -> list[list[int]]:
+        result = []
+        n = len(nums)
+        i = 0
+        nums.sort()
+        while i < n-2:
+            if nums[i] > 0:
+                break
+            l, r = i+1, n-1
+            while l < r:
+                if (v:= nums[i]+nums[l]+nums[r]) < 0:
+                    l += 1
+                    while l<r and nums[l] == nums[l-1]:
+                        l += 1
+                elif v == 0:
+                    result.append([nums[i], nums[l], nums[r]])
+                    l += 1
+                    while l<r and nums[l] == nums[l-1]:
+                        l += 1
+                else:
+                    r -= 1
+                    while l<r and nums[r] == nums[r+1]:
+                        r -= 1
+            i += 1
+            while i<n and nums[i] == nums[i-1]:
+                i += 1
+        return result
+
