@@ -28,3 +28,16 @@ class Solution:
             _map[s[j]] += 1
             j += 1
         return _max if j - i < _max else j - i
+
+# Third solution (beats 5%)
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        l = 0
+        n = len(s)
+        _max = 0
+        for r in range(n):
+            if len(set(s[l:r+1])) == r-l+1:
+                _max = max(_max, r-l+1)
+            else:
+                l += 1
+        return _max

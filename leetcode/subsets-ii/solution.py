@@ -16,3 +16,15 @@ class Solution:
 
         v = self.cal(nums[i+1:])
         return [j + k for k in res for j in v]
+
+# Second solution (beats 100%)
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        ret = [[]]
+        new_nums = Counter(nums)
+        for num in new_nums:
+            new_ret = []
+            for i in range(new_nums[num]):
+                new_ret.extend([[*subset, *([num]*(i+1))] for subset in ret])
+            ret.extend(new_ret)
+        return ret

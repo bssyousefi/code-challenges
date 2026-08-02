@@ -32,7 +32,6 @@ class Solution:
         ret = []
         while i < len(intervals):
             l, r = intervals[i]
-            j = i
             while i < (len(intervals)-1) and intervals[i+1][0] <= r:
                 if intervals[i+1][1] > r:
                     r = intervals[i+1][1]
