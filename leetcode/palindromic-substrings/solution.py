@@ -40,7 +40,7 @@ class Solution:
                     dp[i][j] = True
                     ret += 1
         return ret
-# Fourth solutioin (beats 86%) (two pointers)
+# Fourth solution (beats 86%) (two pointers)
 class Solution:
     def countSubstrings(self, s: str) -> int:
         l = len(s)

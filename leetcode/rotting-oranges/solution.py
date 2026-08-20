@@ -44,7 +44,7 @@ class Solution:
         while fresh > 0 and q:
             for _ in range(len(q)):
                 r, c = q.pop()
-                
+
                 for i, j in [(r-1,c),(r,c-1),(r+1,c),(r,c+1)]:
                     if i < 0 or i == rows or j < 0 or j == cols or grid[i][j] != 1:
                         continue
@@ -91,3 +91,30 @@ class Solution:
             return ret
         else:
             return -1
+
+# Fourth solution (beats 100%) (BFS)
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        q = []
+        fresh = 0
+        m, n = len(grid), len(grid[0])
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 2:
+                    q.append((i,j))
+                elif grid[i][j] == 1:
+                    fresh += 1
+
+        counter = 0
+        MOVES = [(0,1),(0,-1),(1,0),(-1,0)]
+
+        while q and fresh > 0:
+            for _ in range(len(q)):
+                i, j = q.pop(0)
+                for dy, dx in MOVES:
+                    if dy+i > -1 and dy+i<m and dx+j>-1 and dx+j<n and grid[dy+i][dx+j] == 1:
+                        grid[dy+i][dx+j] = 2
+                        fresh -= 1
+                        q.append((dy+i, dx+j))
+            counter += 1
+        return counter if fresh == 0 else -1

@@ -78,5 +78,22 @@ class Solution:
         for i in range(1,len(nums)):
             nums[i]*=nums[i-1] or 1
             rev[i]*= rev[i-1] or 1
-        
+
         return max(nums+rev)
+
+# Sixth solution (beats 91%) (DP)
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        n = len(nums)
+        dp = [None] * n
+        dp[n-1] = (nums[n-1], nums[n-1])
+        _max = nums[n-1]
+        for i in range(n-2,-1,-1):
+            tmp_min, tmp_max = dp[i+1]
+            if nums[i] == 0:
+                dp[i] = (0,0)
+            else:
+                dp[i] = (min(nums[i], tmp_max*nums[i], tmp_min*nums[i]),max(nums[i], tmp_max*nums[i], tmp_min*nums[i]))
+            if _max < dp[i][1]:
+                _max = dp[i][1]
+        return _max

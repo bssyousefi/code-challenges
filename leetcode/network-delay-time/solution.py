@@ -68,3 +68,25 @@ class Solution:
                     heapq.heappush(q, (t+m[node][i], i))
 
         return ret if all(seen) else -1
+
+# Fourth solution (beats 98%) (BFS + min heap)
+class Solution:
+    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+        routes = defaultdict(dict)
+        for u,v,w in times:
+            routes[u][v] = w
+
+        q = [(0, k)]
+        time = 0
+        visit = [False] * n
+        while q:
+            t, node = heapq.heappop(q)
+            if visit[node-1]:
+                continue
+            visit[node-1] = True
+            if t > time:
+                time = t
+            for v in routes[node]:
+                heapq.heappush(q, (t+routes[node][v], v))
+
+        return time if all(visit) else -1

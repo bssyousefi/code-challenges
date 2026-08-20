@@ -34,3 +34,36 @@ class Solution:
             for j in range(cols):
                 if not d[i][j] and board[i][j] == "O":
                     board[i][j] = "X"
+
+
+# Second solution (beats 100%) (DFS)
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        rows, cols = len(board), len(board[0])
+        def save(i,j):
+            if board[i][j] == "O":
+                board[i][j] = "S"
+                if i+1 < rows:
+                    save(i+1,j)
+                if i > 1:
+                    save(i-1,j)
+                if j+1 < cols:
+                    save(i,j+1)
+                if j > 1:
+                    save(i,j-1)
+        for i in [0, rows-1]:
+            for j in range(cols):
+                save(i,j)
+        for j in [0, cols-1]:
+            for i in range(1, rows-1):
+                save(i,j)
+
+        for i in range(rows):
+            for j in range(cols):
+                if board[i][j] == "O":
+                    board[i][j] = "X"
+                elif board[i][j] == "S":
+                    board[i][j] = "O"

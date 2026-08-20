@@ -24,7 +24,7 @@ class Solution:
             head = cur.next
 
         return head
-# Second solution (beats 100%)
+# Second solution (beats 100%)(sliding window)
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
@@ -43,3 +43,19 @@ class Solution:
             counter += 1
         l.next = l.next.next
         return ret.next
+
+# Third solution (beats 100%) (dfs)
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        root = ListNode(0, head)
+
+        def dfs(node, parent) -> int:
+            if node is None:
+                return 0
+            k = dfs(node.next, node)
+            if k+1 == n:
+                parent.next = node.next
+            return k+1
+
+        dfs(head, root)
+        return root.next

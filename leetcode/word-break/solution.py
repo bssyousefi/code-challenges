@@ -35,3 +35,26 @@ class Solution:
                         dp[i] = True
                         break
         return dp[0]
+
+# Third solution (beats 100%) (DFS)
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        n = len(wordDict)
+        mapping = set()
+        def dfs(word):
+            if word == "":
+                return True
+            if word in mapping:
+                return False
+            for w in wordDict:
+                m = len(w)
+                if word[:m] == w:
+                    if dfs(word[m:]):
+                        return True
+            mapping.add(word)
+            return False
+
+        if dfs(s):
+            return True
+        else:
+            return False

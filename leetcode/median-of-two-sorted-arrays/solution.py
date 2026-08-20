@@ -88,3 +88,46 @@ class Solution:
                 j = k - 1
             else:
                 i = k + 1
+
+# Third solution (beats 58%) (binary search)
+class Solution:
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        m, n = len(nums1), len(nums2)
+        isEven = (m+n)%2 == 0
+        need = (m+n)//2+1
+        l1, r1 = 0, m - 1
+        l2, r2 = 0, n - 1
+        while l1 <= r1 and l2 <= r2 and need > 0:
+            k = need//2+1 if need%2==1 else need//2
+            m1 = l1+k-1 if l1+k-1 < r1 else r1
+            m2 = l2+k-1 if l2+k-1 < r2 else r2
+            if nums1[m1] < nums2[m2]:
+                need -= (m1-l1+1)
+                l1 = m1+1
+            else:
+                need -= (m2-l2+1)
+                l2 = m2+1
+        if need > 0:
+            if l1 <= r1:
+                l1 += need
+            else:
+                l2 += need
+        if isEven:
+            res = []
+            if l1 > 0:
+                res.append(nums1[l1-1])
+            if l2 > 0:
+                res.append(nums2[l2-1])
+            if l1 > 1:
+                res.append(nums1[l1-2])
+            if l2 > 1:
+                res.append(nums2[l2-2])
+            res.sort()
+            return (res[-1]+res[-2])/2
+        else:
+            if l1 == 0:
+                return nums2[l2-1]
+            elif l2 == 0:
+                return nums1[l1-1]
+            return max(nums1[l1-1], nums2[l2-1])
+

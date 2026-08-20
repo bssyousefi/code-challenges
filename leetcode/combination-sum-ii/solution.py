@@ -48,3 +48,26 @@ class Solution:
                 i += 1
             i += 1
         return ret
+
+# Third solution (86%)
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        candidates.sort()
+        n = len(candidates)
+        i = 0
+        ret = []
+        while i < n:
+            if candidates[i] == target:
+                ret.append([target])
+            elif candidates[i] > target:
+                break
+            else:
+                result = self.combinationSum2(candidates[i+1:], target - candidates[i])
+                ret.extend([ele + [candidates[i]] for ele in result])
+            while i+1 < n and candidates[i] == candidates[i+1]:
+                i += 1
+            print(i)
+            i += 1
+
+        return ret
+

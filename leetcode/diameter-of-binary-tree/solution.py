@@ -22,3 +22,20 @@ class Solution:
             r, r_max = self.diameterOfBinaryTreeCalc(root.right)
 
         return max(l,r)+1, max(l_max, r_max, l+r)
+
+# Second Solution (beats 75%) (Same as above, update max in dfs)
+class Solution:
+    def __init__(self):
+        self.max = 0
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        def dfs(node):
+            if node is None:
+                return -1
+            l = dfs(node.left)
+            r = dfs(node.right)
+            if self.max < (l+r+2):
+                self.max = l+r+2
+            return max(l,r) + 1
+
+        dfs(root)
+        return self.max

@@ -23,3 +23,22 @@ class Solution:
                 for i in v:
                     ret.append(j + i)
         return ret
+
+
+# Second solution (beats 100%) (Iterative)
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        key_mapping = {
+            "2": "abc", "3": "def", "4": "ghi", "5": "jkl", "6": "mno",
+            "7": "pqrs", "8": "tuv", "9": "wxyz"
+        }
+
+        ret = [""]
+        for digit in digits:
+            new_ret = []
+            for word in ret:
+                for char in key_mapping[digit]:
+                    new_ret.append(word+char)
+            ret = new_ret
+
+        return ret
