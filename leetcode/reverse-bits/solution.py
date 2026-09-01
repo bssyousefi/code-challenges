@@ -11,3 +11,17 @@ class Solution:
             x += "0" * (32-len(x))
         return int(x, 2)
 
+# Third solution (beats 58%)
+class Solution:
+    def reverseBits(self, n: int) -> int:
+        ret = 0
+        count = 0
+        while n:
+            ret ^= n & 1
+            n = n >> 1
+            ret = ret << 1
+            count += 1
+        while count < 31:
+            ret = ret << 1
+            count += 1
+        return ret

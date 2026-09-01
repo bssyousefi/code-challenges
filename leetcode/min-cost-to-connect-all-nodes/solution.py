@@ -104,3 +104,34 @@ class Solution:
             ret += costs[i+1]
 
         return ret
+
+# Fifth solution (beats 35%) (min heap)
+class Solution:
+    def minCostConnectPoints(self, points: List[List[int]]) -> int:
+        def distance(i,j):
+            return math.sqrt((points[i][0]-points[j][0])**2) + math.sqrt((points[i][1]-points[j][1])**2)
+
+        routes = defaultdict(list)
+        n = len(points)
+        for i in range(n):
+            for j in range(i+1,n):
+                d = distance(i,j)
+                routes[i].append((d, i, j))
+                routes[j].append((d, j, i))
+
+        nodes = set(range(1,n))
+        node = 0
+        cost = 0
+        routes = []
+        while len(nodes) > 0:
+            for q in nodes:
+                heapq.heappush(routes, (distance(node,q), q))
+            while routes:
+                c, node = heapq.heappop(routes)
+                if node in nodes:
+                    nodes.remove(node)
+                    cost += c
+                    break
+
+        return int(cost)
+

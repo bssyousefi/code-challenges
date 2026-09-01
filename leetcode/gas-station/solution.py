@@ -20,3 +20,27 @@ class Solution:
             return x
         else:
             return -1
+
+# Second solution (beats 5%) (double pointer)
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        n = len(gas)
+        ret = -1
+        gas += gas
+        cost += cost
+        tank = 0
+        i, j = 0, 0
+        while j < n and i < 2*n:
+            if ret == -1 and gas[i] >= cost[i]:
+                ret = i
+                j = i
+            if j >= n:
+                return -1
+            if gas[i]+tank >= cost[i]:
+                tank += gas[i] - cost[i]
+            else:
+                ret = -1
+                tank = 0
+            i += 1
+
+        return ret
