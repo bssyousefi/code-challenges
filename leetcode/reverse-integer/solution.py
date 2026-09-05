@@ -40,3 +40,25 @@ class Solution:
             result = result * 10 + mod
 
         return result * sign
+
+# Third solution (beats 98%)
+class Solution:
+    def reverse(self, x: int) -> int:
+        _max = (1 << 31) - 1
+        _min = -_max - 1
+        sign = True
+        if x < 0:
+            sign = False
+            x = -x
+        cur = 0
+        while x:
+            cur *= 10
+            cur += x%10
+            x = x // 10
+
+        if not sign:
+            cur = -cur
+
+        if cur < _min or cur > _max:
+            return 0
+        return cur

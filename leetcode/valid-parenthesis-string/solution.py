@@ -61,3 +61,36 @@ class Solution:
                 return False
 
         return True
+
+# Third solution (beats 10%) (recursive)
+class Solution:
+    def checkValidString(self, s: str) -> bool:
+        cache = {}
+        l = len(s)
+        def dfs(i, n):
+            if n < 0:
+                return False
+            if i == l:
+                if n == 0:
+                    return True
+                else:
+                    return False
+            if (i,n) in cache:
+                return cache[(i,n)]
+            ret = False
+            if s[i] == "(":
+                ret = dfs(i+1, n+1)
+            elif s[i] == ")":
+                ret = dfs(i+1, n-1)
+            else:
+                if dfs(i+1,n):
+                    ret = True
+                elif dfs(i+1, n-1):
+                    ret = True
+                elif dfs(i+1, n+1):
+                    ret = True
+
+            cache[(i,n)] = ret
+            return ret
+
+        return dfs(0,0)

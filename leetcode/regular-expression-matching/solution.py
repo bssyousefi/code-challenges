@@ -107,4 +107,69 @@ class Solution:
                     ret = False
         self.cache[(s,p)] = ret
         return ret
-    
+
+# Third solution (beats 91%)
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        n, m = len(s), len(p)
+        cache = {}
+
+        def dfs(i, j):
+            if (i,j) in cache:
+                return cache[(i,j)]
+            if j == m:
+                if i == n:
+                    cache[(i,j)] = True
+                    return True
+                cache[(i,j)] = False
+                return False
+            star = False
+            if j < m-1 and p[j+1] == "*":
+                star = True
+            if i == n:
+                if star:
+                    cache[(i,j)] = dfs(i,j+2)
+                    return cache[(i,j)]
+                cache[(i,j)] = False
+                return False
+            if star:
+                if p[j] == ".":
+                    if dfs(i,j+2):
+                        cache[(i,j)] = True
+                        return True
+                    if dfs(i+1,j+2):
+                        cache[(i,j)] = True
+                        return True
+                    if dfs(i+1,j):
+                        cache[(i,j)] = True
+                        return True
+                    cache[(i,j)] = False
+                    return False
+                else:
+                    if p[j] == s[i]:
+                        if dfs(i+1, j+2):
+                            cache[(i,j)] = True
+                            return True
+                        if dfs(i, j+2):
+                            cache[(i,j)] = True
+                            return True
+                        if dfs(i+1, j):
+                            cache[(i,j)] = True
+                            return True
+                        cache[(i,j)] = False
+                        return False
+                    else:
+                        cache[(i,j)] = dfs(i, j+2)
+                        return cache[(i,j)]
+            else:
+                if p[j] == ".":
+                    cache[(i,j)] = dfs(i+1,j+1)
+                    return cache[(i,j)]
+                if s[i] == p[j]:
+                    cache[(i,j)] = dfs(i+1,j+1)
+                    return cache[(i,j)]
+                else:
+                    cache[(i,j)] = False
+                    return False
+
+        return dfs(0,0)
