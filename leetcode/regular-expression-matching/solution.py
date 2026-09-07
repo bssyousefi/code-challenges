@@ -173,3 +173,29 @@ class Solution:
                     return False
 
         return dfs(0,0)
+
+# Fourth solution (beats 90%) (neat version)
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        n, m = len(s), len(p)
+        cache = {}
+
+        def dfs(i, j):
+            if (i,j) in cache:
+                return cache[(i,j)]
+            if j == m:
+                return i == n
+            match = i < n and (s[i] == p[j] or p[j] == ".")
+            if (j+1) < m and p[j+1] == "*":
+                if match and dfs(i+1,j):
+                    cache[(i,j)] = True
+                    return True
+                cache[(i,j)] = dfs(i,j+2)
+                return cache[(i,j)]
+            if match:
+                cache[(i,j)] = dfs(i+1,j+1)
+                return cache[(i,j)]
+            cache[(i,j)] = False
+            return False
+
+        return dfs(0,0)
