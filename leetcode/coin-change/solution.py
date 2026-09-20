@@ -13,7 +13,7 @@ class Solution:
                     q.append(j+c)
         return 0 if amount == 0 else dp[amount] if dp[amount] > 0 else -1
 
-# Second solution (beats 73%) (DP)
+# Second solution (beats 94%) (DP)
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
         coins.sort(reverse=True)

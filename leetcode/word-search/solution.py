@@ -60,3 +60,27 @@ class Solution:
                 if dfs(i, j, 0):
                     return True
         return False
+
+# Third solution (beats 85%) (same dfs)
+class Solution:
+    def exist(self, board: list[list[str]], word: str) -> bool:
+        m, n = len(board), len(board[0])
+        l = len(word)
+        visit = [[False]*n for _ in range(m)]
+        def dfs(i,j,k):
+            if k == l-1:
+                return True
+            visit[i][j] = True
+            for dy,dx in [(0,1),(1,0),(-1,0),(0,-1)]:
+                if  0 <= dy+i < m and 0 <= dx+j < n and not visit[dy+i][dx+j] and board[dy+i][dx+j] == word[k+1]:
+                    if dfs(dy+i,dx+j,k+1):
+                        return True
+            visit[i][j] = False
+            return False
+
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == word[0] and dfs(i,j,0):
+                    return True
+
+        return False

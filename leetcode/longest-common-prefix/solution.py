@@ -34,3 +34,24 @@ class Solution:
                     result = result[:-1]
         return result
 
+# Third solution (beats 100%)
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        ret = strs[0]
+
+        def find(a, b):
+            n, m = len(a), len(b)
+            i = 0
+            while i < n and i < m:
+                if a[i] == b[i]:
+                    i += 1
+                else:
+                    break
+            return a[:i]
+
+        n = len(strs)
+        for i in range(1, n):
+            ret = find(ret, strs[i])
+            if ret == "":
+                return ""
+        return ret

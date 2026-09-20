@@ -36,3 +36,36 @@ class Solution:
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
         return sorted(nums, reverse=True)[k-1]
+
+# Third solution (beats 63%) (max heap)
+class Solution:
+    def findKthLargest(self, nums: list[int], k: int) -> int:
+        heapq.heapify_max(nums)
+        ret = None
+        for _ in range(k):
+            ret = heapq.heappop_max(nums)
+
+        return ret
+
+# Fourth solution (beats 26%) (min heap)
+class Solution:
+    def findKthLargest(self, nums: list[int], k: int) -> int:
+        vals = [-i for i in nums]
+        heapq.heapify(vals)
+        ret = None
+        for _ in range(k):
+            ret = heapq.heappop(vals)
+
+        return -ret
+
+# Fifth solution (beats 98%) (limited min heap)
+class Solution:
+    def findKthLargest(self, nums: list[int], k: int) -> int:
+        vals = nums[:k]
+        heapq.heapify(vals)
+
+        for num in nums[k:]:
+            if num > vals[0]:
+                heapq.heappushpop(vals, num)
+
+        return vals[0]

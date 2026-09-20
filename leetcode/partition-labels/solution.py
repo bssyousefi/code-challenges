@@ -54,3 +54,25 @@ class Solution:
                 start = i + 1
 
         return ret
+
+# Fourth solution (beats 100%) (hashmap)
+class Solution:
+    def partitionLabels(self, s: str) -> list[int]:
+        counter = Counter(s)
+        visit = set()
+        count = 0
+        size = 0
+        ret = []
+        for char in s:
+            if char in visit:
+                count -= 1
+            else:
+                visit.add(char)
+                count += counter[char] - 1
+            size += 1
+            if count == 0:
+                visit = set()
+                ret.append(size)
+                size = 0
+
+        return ret

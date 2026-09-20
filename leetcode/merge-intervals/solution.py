@@ -24,7 +24,7 @@ class Solution:
             insert(interval)
 
         return ret
-# Second solution (beats 73%) (built-in sort)
+# Second solution (beats 100%) (built-in sort)
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
         intervals.sort(key=lambda x: x[0])
@@ -36,6 +36,23 @@ class Solution:
                 if intervals[i+1][1] > r:
                     r = intervals[i+1][1]
                 i += 1
-            ret.append([l, max(intervals[i][1], r)])
+            ret.append([l, r])
             i += 1
+        return ret
+
+# Third solution (beats 35%) (built-in sort)
+class Solution:
+    def merge(self, intervals: list[list[int]]) -> list[list[int]]:
+        intervals.sort()
+        ret = []
+        n = len(intervals)
+        tmp = [*intervals[0]]
+        for i in range(1,n):
+            if intervals[i][0] <= tmp[1]:
+                tmp[1] = max(intervals[i][1], tmp[1])
+            else:
+                ret.append(tmp)
+                tmp = [*intervals[i]]
+        
+        ret.append(tmp)
         return ret
