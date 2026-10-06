@@ -13,3 +13,19 @@ class Solution:
             result += map_[s[i]]
         return result
 
+# Second solution (beats 80%)
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        _map = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
+        n = len(s)
+        i = 0
+        ret = 0
+        while i < n:
+            if i + 1 < n and _map[s[i]] < _map[s[i+1]]:
+                ret += _map[s[i+1]] - _map[s[i]]
+                i += 2
+            else:
+                ret += _map[s[i]]
+                i += 1
+
+        return ret

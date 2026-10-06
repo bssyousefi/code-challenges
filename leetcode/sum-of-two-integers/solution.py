@@ -8,7 +8,6 @@ class Solution:
         while k < 1 << 32:
             la, lb = a&1, b&1
             tmp = la ^ lb ^ c
-            print(la, lb, tmp)
             if tmp:
                 res |= k
             c = (la&c) | (lb&c) | (la&lb)
@@ -17,6 +16,7 @@ class Solution:
             k = k << 1
 
         # if it's a negative number, convert it to a negative number
+        # in Python to compute ~x it uses -x - 1
         if res > 0x7FFFFFFF:
             res = ~(res ^ mask)
         return res

@@ -1,3 +1,4 @@
+# First solution (beats 100%)
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         _map = {}

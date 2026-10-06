@@ -62,3 +62,19 @@ class Solution:
         if cur < _min or cur > _max:
             return 0
         return cur
+
+# Fourth solution (beats 100%)
+class Solution:
+    def reverse(self, x: int) -> int:
+        ret = 0
+        sign = 1 if x >= 0 else -1
+        x = x * sign
+        _max = (1<<31) - 1
+        while x:
+            ret *= 10
+            if ret > _max:
+                return 0
+            ret += x%10
+            x = x//10
+
+        return sign * ret

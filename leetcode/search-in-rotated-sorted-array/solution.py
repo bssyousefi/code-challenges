@@ -49,4 +49,4 @@ class Solution:
                 else:
                     j = m - 1
         return i if nums[i] == target else -1
-        
+

@@ -53,3 +53,28 @@ class Solution:
 
         return True
 
+# Third solution (beats 89%) (BFS) (Kahn's algorithm)
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: list[list[int]]) -> bool:
+        routes = defaultdict(list)
+        in_degrees = [0]*numCourses
+
+        for a, b in prerequisites:
+            routes[b].append(a)
+            in_degrees[a] += 1
+
+        queue = []
+        for i in range(numCourses):
+            if in_degrees[i] == 0:
+                queue.append(i)
+
+        courses = []
+        while queue:
+            course = queue.pop(0)
+            courses.append(course)
+            for c in routes[course]:
+                in_degrees[c] -= 1
+                if in_degrees[c] == 0:
+                    queue.append(c)
+
+        return True if len(courses) == numCourses else False

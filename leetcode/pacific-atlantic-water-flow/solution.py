@@ -70,3 +70,33 @@ class Solution:
                 ret.append([i,j])
 
         return ret
+
+# Third solution (beats 82%) (DFS, flow upward from boundaries)
+class Solution:
+    def pacificAtlantic(self, heights: list[list[int]]) -> list[list[int]]:
+        m, n = len(heights), len(heights[0])
+        dp = [[0]*n for _ in range(m)]
+
+        pacific = [(0,i) for i in range(n)]
+        atlantic = [(m-1,i) for i in range(n)]
+        for i in range(1,m):
+            pacific.append((i,0))
+            atlantic.append((m-1-i,n-1))
+
+        def dfs(i,j):
+            visit[i][j] = True
+            dp[i][j] += 1
+            for dy,dx in [(0,1),(1,0),(-1,0),(0,-1)]:
+                if 0 <= dy+i < m and 0 <= dx+j < n and not visit[dy+i][dx+j] and heights[dy+i][dx+j] >= heights[i][j]:
+                    dfs(dy+i,dx+j)
+
+        visit = [[False]*n for _ in range(m)]
+        for i,j in pacific:
+            if not visit[i][j]:
+                dfs(i,j)
+
+        visit = [[False]*n for _ in range(m)]
+        for i,j in atlantic:
+            if not visit[i][j]:
+                dfs(i,j)
+        return [[i,j] for i in range(m) for j in range(n) if dp[i][j] == 2]

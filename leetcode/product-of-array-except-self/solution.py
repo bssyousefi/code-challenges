@@ -8,7 +8,7 @@ class Solution:
             rl[l-1-i] = rl[l-i] * nums[l-i]
         return [lr[i]*rl[i] for i in range(l)]
 
-# Second solution
+# Second solution (beats 55%)
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         l = len(nums)

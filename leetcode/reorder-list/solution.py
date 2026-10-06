@@ -31,3 +31,24 @@ class Solution:
         else:
             cur.next.next.next = None
 
+# Second solution (beats 16%)
+class Solution:
+    def reorderList(self, head: ListNode | None) -> None:
+        """
+        Do not return anything, modify head in-place instead.
+        """
+        cur = head
+
+        def dfs(node):
+            nonlocal cur
+            if node and node.next and node.next.next:
+                if dfs(node.next):
+                    return True
+            if cur == node or node.next.next == cur:
+                return True
+            else:
+                cur.next, node.next.next, node.next = node.next, cur.next, None
+                cur = cur.next.next
+                return False
+
+        dfs(head)

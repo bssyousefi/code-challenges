@@ -97,3 +97,17 @@ class Solution:
             if _max < dp[i][1]:
                 _max = dp[i][1]
         return _max
+
+# Seventh solution (beats 91%) (greedy, same as sixth)
+class Solution:
+    def maxProduct(self, nums: list[int]) -> int:
+        n = len(nums)
+        _min, _max = nums[0], nums[0]
+        ret = nums[0]
+
+        for i in range(1,n):
+            val1, val2 = nums[i] * _min, nums[i] * _max
+            ret = max(ret, val1, val2, nums[i])
+            _min, _max = min(val1, val2, nums[i]), max(val1, val2, nums[i])
+
+        return ret

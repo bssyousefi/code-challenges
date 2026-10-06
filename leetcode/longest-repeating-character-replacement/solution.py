@@ -13,3 +13,24 @@ class Solution:
 
         return i-l+1
 
+# Second solution (beats 94%)
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        _max = 0
+        _map = defaultdict(int)
+        n = len(s)
+        l, r = 0, 0
+        m = 0
+        while r < n:
+            _map[s[r]] += 1
+            if _map[s[r]] > m:
+                m = _map[s[r]]
+            if r-l+1-k > m:
+                _map[s[l]] -= 1
+                l += 1
+
+            if r-l+1 > _max:
+                _max = r-l+1
+            r += 1
+
+        return _max
